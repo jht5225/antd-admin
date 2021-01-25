@@ -39,20 +39,29 @@ class Dashboard extends PureComponent {
       weather,
       sales,
       quote,
-      numbers,
-      recentSales,
       comments,
       completed,
-      browser,
-      cpu,
       user,
+      dayname,
+      monthname,
+      yearname,
+      adjytdperf,
+      rawytdperf,
+      worstmonthperfabs,
+      worstyearperfabs,
+      worstyearperf,
+      worstmonthperf,
+      downtimemonth,
+      downtimeyear,
+      restofmonth,
+      restofyear,
+      rollingyear,
+      irrvariance,
+      num_projects,
+      num_reporting,
     } = dashboard
 
-    const numberCards = numbers.map((item, key) => (
-      <Col key={key} lg={6} md={12}>
-        <NumberCard {...item} />
-      </Col>
-    ))
+   
 
     return (
       <Page
@@ -60,7 +69,60 @@ class Dashboard extends PureComponent {
         className={styles.dashboard}
       >
         <Row gutter={24}>
-          {numberCards}
+          <Col key={0} lg={6} md={12}>
+            <NumberCard icon={"down-trend"} title={"Raw Perf"} decimals={2} suffix='%' number={rawytdperf} color={Color.red}/>
+          </Col>
+          <Col key={1} lg={6} md={12}>
+            <NumberCard icon={"down-trend"} title={"Adj Perf"} decimals={2} suffix='%' number={adjytdperf} color={Color.red}/>
+          </Col>
+          <Col key={2} lg={6} md={12}>
+            <NumberCard icon={"down-trend"} title={"# Projects"} number={num_projects} color={Color.red}/>
+          </Col>
+          <Col key={3} lg={6} md={12}>
+            <NumberCard icon={"down-trend"} title={"# Reporting"} number={num_projects} color={Color.red}/>
+          </Col>
+          <Col lg={8} md={24}>
+            <Card title={monthname} bordered={false} >
+              <ScrollBar>
+                <Cpu data={restofmonth} />
+              </ScrollBar>
+            </Card>
+          </Col>
+          <Col lg={8} md={24}>
+            <Card title={yearname} bordered={false} >
+              <ScrollBar>
+                <Cpu data={restofyear} />
+              </ScrollBar>
+            </Card>
+          </Col>
+          <Col lg={8} md={24}>
+            <Card title={"Rolling Year"} bordered={false} >
+              <ScrollBar>
+                <Cpu data={rollingyear} />
+              </ScrollBar>
+            </Card>
+          </Col>
+          <Col lg={8} md={24}>
+            <Card title={monthname} bordered={false} >
+              <ScrollBar>
+                <Browser data={irrvariance} />
+              </ScrollBar>
+            </Card>
+          </Col>
+          <Col lg={8} md={24}>
+            <Card title={yearname} bordered={false} >
+              <ScrollBar>
+                <Browser data={irrvariance} type="year"/>
+              </ScrollBar>
+            </Card>
+          </Col>
+          <Col lg={8} md={24}>
+            <Card title={"Rolling Year"} bordered={false} >
+              <ScrollBar>
+                <Browser data={irrvariance} type="rolling" />
+              </ScrollBar>
+            </Card>
+          </Col>
           <Col lg={18} md={24}>
             <Card
               bordered={false}
@@ -107,10 +169,36 @@ class Dashboard extends PureComponent {
             </Row>
           </Col>
           <Col lg={12} md={24}>
-            <Card bordered={false} {...bodyStyle}>
-              <RecentSales data={recentSales} />
+            <Card bordered={false} title={`Biggest Contributors to Underperformance for ${monthname}`} {...bodyStyle}>
+              <RecentSales data={worstmonthperfabs}  />
             </Card>
           </Col>
+          <Col lg={12} md={24}>
+            <Card bordered={false} title={"Biggest Contributors to Underperformance for Rolling Year"} {...bodyStyle}>
+              <RecentSales data={worstyearperfabs}  />
+            </Card>
+          </Col>
+          <Col lg={12} md={24}>
+            <Card bordered={false} title={`Worst Performers for ${monthname}`}  {...bodyStyle}>
+              <RecentSales type="variance" data={worstmonthperf}  />
+            </Card>
+          </Col>
+          <Col lg={12} md={24}>
+            <Card bordered={false} title={"Worst Performers for Rolling Year"}  {...bodyStyle}>
+              <RecentSales type="variance" data={worstyearperf}  />
+            </Card>
+          </Col>
+          <Col lg={12} md={24}>
+            <Card bordered={false} title={`Most Downtime for ${monthname}`}  {...bodyStyle}>
+              <RecentSales type="days" data={downtimemonth}  />
+            </Card>
+          </Col>
+          <Col lg={12} md={24}>
+            <Card bordered={false} title={"Most Downtime for Rolling Year"}  {...bodyStyle}>
+              <RecentSales type="days" data={downtimeyear}  />
+            </Card>
+          </Col>
+          
           <Col lg={12} md={24}>
             <Card bordered={false} {...bodyStyle}>
               <ScrollBar>
@@ -128,18 +216,7 @@ class Dashboard extends PureComponent {
               <Completed data={completed} />
             </Card>
           </Col>
-          <Col lg={8} md={24}>
-            <Card bordered={false} {...bodyStyle}>
-              <Browser data={browser} />
-            </Card>
-          </Col>
-          <Col lg={8} md={24}>
-            <Card bordered={false} {...bodyStyle}>
-              <ScrollBar>
-                <Cpu {...cpu} />
-              </ScrollBar>
-            </Card>
-          </Col>
+          
           <Col lg={8} md={24}>
             <Card
               bordered={false}

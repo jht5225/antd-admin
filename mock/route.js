@@ -17,12 +17,12 @@ const database = [
   {
     id: '2',
     breadcrumbParentId: '1',
-    name: 'Users',
+    name: 'Projects',
     zh: {
       name: '用户管理'
     },
     'pt-br': {
-      name: 'Usuário'
+      name: 'Projetos'
     },
     icon: 'user',
     route: '/user',
@@ -30,14 +30,14 @@ const database = [
   {
     id: '7',
     breadcrumbParentId: '1',
-    name: 'Posts',
+    name: 'Companies',
     zh: {
       name: '用户管理'
     },
     'pt-br': {
-      name: 'Posts'
+      name: 'Empresas'
     },
-    icon: 'shopping-cart',
+    icon: 'user',
     route: '/post',
   },
   {

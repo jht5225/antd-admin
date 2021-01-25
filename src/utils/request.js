@@ -2,6 +2,7 @@ import axios from 'axios'
 import { cloneDeep, isEmpty } from 'lodash'
 const { parse, compile } = require("path-to-regexp")
 import { message } from 'antd'
+import store from 'store'
 import { CANCEL_REQUEST_MESSAGE } from 'utils/constant'
 
 const { CancelToken } = axios
@@ -14,6 +15,7 @@ export default function request(options) {
   try {
     let domain = ''
     const urlMatch = url.match(/[a-zA-z]+:\/\/[^/]*/)
+    
     if (urlMatch) {
       ;[domain] = urlMatch
       url = url.slice(domain.length)
@@ -27,6 +29,7 @@ export default function request(options) {
         delete cloneData[item.name]
       }
     }
+    
     url = domain + url
   } catch (e) {
     message.error(e.message)
@@ -40,7 +43,13 @@ export default function request(options) {
       cancel,
     })
   })
-
+  const token = store.get('token')
+  if (token){
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`
+    };
+  }
   return axios(options)
     .then(response => {
       const { statusText, status, data } = response

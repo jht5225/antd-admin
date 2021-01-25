@@ -13,14 +13,14 @@ const countUpProps = {
   separator: ',',
 }
 
-function User({ avatar, username, sales = 0, sold = 0 }) {
+function User({ avatar, title, sales = 0, sold = 0 }) {
   return (
     <div className={styles.user}>
       <div className={styles.header}>
-        <div className={styles.headerinner}>
-          <Avatar size="large" src={avatar} />
-          <h5 className={styles.name}>{username}</h5>
-        </div>
+        
+          
+        <h5 className={styles.name}>{title}</h5>
+        
       </div>
       <div className={styles.number}>
         <div className={styles.item}>
@@ -47,7 +47,7 @@ function User({ avatar, username, sales = 0, sold = 0 }) {
 
 User.propTypes = {
   avatar: PropTypes.string,
-  username: PropTypes.string,
+  title: PropTypes.string,
   sales: PropTypes.number,
   sold: PropTypes.number,
 }

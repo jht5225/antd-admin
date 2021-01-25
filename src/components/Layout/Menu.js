@@ -17,6 +17,7 @@ class SiderMenu extends PureComponent {
 
   onOpenChange = openKeys => {
     const { menus } = this.props
+    
     const rootSubmenuKeys = menus.filter(_ => !_.menuParentId).map(_ => _.id)
 
     const latestOpenKey = openKeys.find(

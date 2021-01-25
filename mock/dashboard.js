@@ -5,10 +5,10 @@ const { ApiPrefix, Color } = Constant
 const Dashboard = Mock.mock({
   'sales|8': [
     {
-      'name|+1': 2008,
-      'Clothes|200-500': 1,
-      'Food|180-400': 1,
-      'Electronics|300-550': 1,
+      'name|+2': 0,
+      'Production|200-500': 1,
+      'Baseline|180-400': 1,
+      
     },
   ],
   cpu: {
@@ -109,28 +109,28 @@ const Dashboard = Mock.mock({
   },
   numbers: [
     {
-      icon: 'pay-circle-o',
-      color: Color.green,
-      title: 'Online Review',
-      number: 2781,
-    },
-    {
-      icon: 'team',
-      color: Color.blue,
-      title: 'New Customers',
-      number: 3241,
-    },
-    {
-      icon: 'message',
-      color: Color.purple,
-      title: 'Active Projects',
-      number: 253,
-    },
-    {
-      icon: 'shopping-cart',
+      icon: 'down-trend',
       color: Color.red,
-      title: 'Referrals',
-      number: 4324,
+      title: 'Raw Performance',
+      number: 89.5,
+    },
+    {
+      icon: 'down-trend',
+      color: Color.red,
+      title: 'Adj. Performance',
+      number: 85.5,
+    },
+    {
+      icon: 'down-trend',
+      color: Color.red,
+      title: 'Month Completion',
+      number: 45.16,
+    },
+    {
+      icon: 'down-trend',
+      color: Color.red,
+      title: 'Year Completion',
+      number: 3.84,
     },
   ],
 })

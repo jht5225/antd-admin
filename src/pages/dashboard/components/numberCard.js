@@ -6,7 +6,8 @@ import iconMap from 'utils/iconMap'
 import styles from './numberCard.less'
 
 
-function NumberCard({ icon, color, title, number, countUp }) {
+function NumberCard({ icon, color, title, number, countUp, decimals=0, suffix='' }) {
+
   return (
     <Card
       className={styles.numberCard}
@@ -23,8 +24,10 @@ function NumberCard({ icon, color, title, number, countUp }) {
             start={0}
             end={number}
             duration={2.75}
+            decimals={decimals}
             useEasing
             useGrouping
+            suffix={suffix}
             separator=","
             {...(countUp || {})}
           />
@@ -40,6 +43,8 @@ NumberCard.propTypes = {
   title: PropTypes.string,
   number: PropTypes.number,
   countUp: PropTypes.object,
+  decimals: PropTypes.number,
+  suffix: PropTypes.string
 }
 
 export default NumberCard

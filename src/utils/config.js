@@ -1,8 +1,9 @@
 module.exports = {
-  siteName: 'AntD Admin',
+  siteName: 'Gaia',
   copyright: 'Ant Design Admin  ©2020 zuiidea',
-  logoPath: '/logo.svg',
+  logoPath: '/logo-altus.png',
   apiPrefix: '/api/v1',
+  dataApi: 'http://ec2-3-22-175-41.us-east-2.compute.amazonaws.com:8000',
   fixedHeader: true, // sticky primary layout header
 
   /* Layout configuration, specify which layout to use for route. */

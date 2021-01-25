@@ -19,24 +19,23 @@ const status = {
   },
 }
 
-function Browser({ data }) {
+function Browser({ data, type="month" }) {
   const columns = [
     {
-      title: 'name',
+      title: 'Region',
       dataIndex: 'name',
       className: styles.name,
     },
     {
-      title: 'percent',
-      dataIndex: 'percent',
+      title: 'Irradiance Variance',
+      dataIndex: type,
       className: styles.percent,
-      render: (text, it) => <Tag color={status[it.status].color}>{text}%</Tag>,
+      // render: (text, it) => <Tag color={status[it.status].color}>{text}%</Tag>,
     },
   ]
   return (
     <Table
       pagination={false}
-      showHeader={false}
       columns={columns}
       rowKey='name'
       dataSource={data}
@@ -46,6 +45,7 @@ function Browser({ data }) {
 
 Browser.propTypes = {
   data: PropTypes.array,
+  type: PropTypes.string,
 }
 
 export default Browser

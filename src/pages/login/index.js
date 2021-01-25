@@ -17,6 +17,7 @@ const FormItem = Form.Item
 class Login extends PureComponent {
 
   render() {
+    
     const { dispatch, loading, i18n } = this.props
     
     const handleOk = values => {

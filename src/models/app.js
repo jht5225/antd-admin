@@ -8,9 +8,10 @@ import { ROLE_TYPE } from 'utils/constant'
 import { queryLayout } from 'utils'
 import { CANCEL_REQUEST_MESSAGE } from 'utils/constant'
 import api from 'api'
+import route_list from '../nav/route_list'
 import config from 'config'
 
-const { queryRouteList, logoutUser, queryUserInfo } = api
+const {queryRouteList,  logoutUser, queryUserInfo, users } = api
 
 const goDashboard = () => {
   if (pathToRegexp(['/', '/login']).exec(window.location.pathname)) {
@@ -81,14 +82,29 @@ export default {
       // store isInit to prevent query trigger by refresh
       const isInit = store.get('isInit')
       if (isInit) {
+        
         goDashboard()
         return
       }
+      
       const { locationPathname } = yield select(_ => _.app)
-      const { success, user } = yield call(queryUserInfo, payload)
-      if (success && user) {
-        const { list } = yield call(queryRouteList)
-        const { permissions } = user
+      console.log(payload)
+      // const { success, user } = yield call(queryUserInfo, payload)
+      const {success, results} = yield call(users, payload)
+      const user = {
+        username: results[0].username,
+        email: results[0].email,
+        id: results[0].id
+      }
+      
+      const loggedIn = store.get('loggedIn')
+
+      if (success && user && loggedIn) {
+        
+        const list = route_list
+        const permissions  = {
+          role: ROLE_TYPE.ADMIN
+        }
         let routeList = list
         if (
           permissions.role === ROLE_TYPE.ADMIN ||
@@ -124,11 +140,13 @@ export default {
 
     *signOut({ payload }, { call, put }) {
       const data = yield call(logoutUser)
+      console.log(data)
       if (data.success) {
         store.set('routeList', [])
         store.set('permissions', { visit: [] })
         store.set('user', {})
         store.set('isInit', false)
+        store.set('loggedIn', false);
         yield put({ type: 'query' })
       } else {
         throw data

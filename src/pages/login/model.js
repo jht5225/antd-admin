@@ -1,8 +1,10 @@
 import { history } from 'umi'
 const { pathToRegexp } = require("path-to-regexp")
 import api from 'api'
+import store from 'store'
+import { configConsumerProps } from 'antd/lib/config-provider'
 
-const { loginUser } = api
+const { loginUser, logIn } = api
 
 export default {
   namespace: 'login',
@@ -18,10 +20,16 @@ export default {
   // },
   effects: {
     *login({ payload }, { put, call, select }) {
-      const data = yield call(loginUser, payload)
+      // const data = yield call(loginUser, payload)
+      // console.log(data)
+      const newData = yield call(logIn, payload)
+      
+      
       const { locationQuery } = yield select(_ => _.app)
-      if (data.success) {
+      if (newData.success) {
         const { from } = locationQuery
+        store.set('loggedIn', true)
+        store.set('token', newData.token)
         yield put({ type: 'app/query' })
         if (!pathToRegexp('/login').exec(from)) {
           if (['', '/'].includes(from)) history.push('/dashboard')

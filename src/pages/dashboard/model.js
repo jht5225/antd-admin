@@ -4,7 +4,8 @@ import api from 'api'
 const { pathToRegexp } = require("path-to-regexp")
 import { model } from 'utils/model'
 
-const { queryDashboard, queryWeather } = api
+
+const { queryDashboard, queryWeather, prodData } = api
 const avatar = '//cdn.antd-admin.zuiidea.com/bc442cf0cc6f7940dcc567e465048d1a8d634493198c4-sPx5BR_fw236.jpeg'
 
 export default modelExtend(model, {
@@ -29,6 +30,87 @@ export default modelExtend(model, {
     user: {
       avatar,
     },
+    dayname: "January 1st 0000",
+    monthname: "January 0000",
+    adjytdperf: 0,
+    rawytdperf: 0,
+    num_projects: 146,
+    num_reporting: 0,
+    worstmonthperfabs: [
+      {
+        name: "",
+        diff: "0.00%",
+        status: "Down",
+        statuscolor: "Red"
+      }
+    ],
+    worstmonthperf: [
+      {
+        name: "",
+        variance: "0.00%",
+        status: "Down",
+        statuscolor: "Red"
+      }
+    ],
+    worstyearperf: [
+      {
+        name: "",
+        variance: "0.00%",
+        status: "Down",
+        statuscolor: "Red"
+      }
+    ],
+    worstyearperfabs: [
+      {
+        name: "",
+        diff: "0.00%",
+        status: "Down",
+        statuscolor: "Red"
+      }
+    ],
+    downtimemonth: [
+      {
+        name: "",
+        days: 0,
+        lostrev: "$0.00",
+        status: "Down",
+        statuscolor: "Red"
+      }
+    ],
+    downtimeyear: [
+      {
+        name: "",
+        days: 0,
+        lostrev: "$0.00",
+        status: "Down",
+        statuscolor: "Red"
+      }
+    ],
+    irrvariance: [
+      {
+        name: '',
+        stations: '0/0',
+        month: "0.00%",
+        year: "0.00%",
+        rolling: "0.00%"
+      }
+    ],
+    restofmonth:{
+      perccomp: 0.00,
+      rawvariance: 0.00,
+      adjvariance: 0.00
+    },
+    restofyear:{
+      perccomp: 0.00,
+      rawvariance: 0.00,
+      adjvariance: 0.00
+    },
+    rollingyear: {
+      perccomp: 0.00,
+      rawvariance: 0.00,
+      adjvariance: 0.00
+    },
+
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -38,7 +120,8 @@ export default modelExtend(model, {
           pathToRegexp('/').exec(pathname)
         ) {
           dispatch({ type: 'query' })
-          dispatch({ type: 'queryWeather' })
+          dispatch({type: 'queryProdData'})
+          
         }
       })
     },
@@ -71,5 +154,31 @@ export default modelExtend(model, {
         })
       }
     },
+    *queryProdData({payload={}}, {call, put}){
+      const res = yield call(prodData, payload)
+      const { success, data } = res
+      console.log(data)
+      if (success){
+        const perf = {
+          dayname: data.dayname,
+          monthname: data.monthname,
+          adjytdperf: data.adjytdperf,
+          rawytdperf: data.rawytdperf,
+          num_projects: data.num_projects,
+          num_reporting: data.num_reporting,
+          worstmonthperfabs: data.worstmonthperfabs,
+          worstmonthperf: data.worstmonthperf,
+          worstyearperf: data.worstyearperf,
+          worstyearperfabs: data.worstyearperfabs,
+          downtimemonth: data.downtimemonth,
+          downtimeyear: data.downtimeyear,
+          irrvariance: data.irrvariance
+        }
+        yield put({
+          type: "updateState",
+          payload: data
+        })
+      }
+    }
   },
 })

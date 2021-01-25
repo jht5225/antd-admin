@@ -1,5 +1,5 @@
 import request from 'utils/request'
-import { apiPrefix } from 'utils/config'
+import { apiPrefix, dataApi } from 'utils/config'
 
 import api from './api'
 
@@ -28,6 +28,7 @@ for (const key in api) {
 }
 
 APIFunction.queryWeather = params => {
+  
   params.key = 'i7sau1babuzwhycn'
   return request({
     url: `${apiPrefix}/weather/now.json`,
@@ -35,4 +36,31 @@ APIFunction.queryWeather = params => {
   })
 }
 
+//Auth calls
+APIFunction.logIn = params => {
+  
+  return request({
+    url: `${dataApi}/api-auth/`,
+    data: params,
+    method: 'post',
+  })
+}
+
+APIFunction.users = params => {
+  
+  return request({
+    url: `${dataApi}/api/users/`,
+    data: params,
+    
+  })
+}
+
+//Prod data calls 
+APIFunction.prodData = params => {
+
+  return request({
+    url: `${dataApi}/api/performancedata/`,
+    data: params,
+  })
+}
 export default APIFunction

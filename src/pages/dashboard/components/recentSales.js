@@ -6,17 +6,20 @@ import { Color } from 'utils'
 import styles from './recentSales.less'
 
 const status = {
+  'Down': Color.red,
+  'No Data': Color.yellow,
+  'Operating': Color.green,
   1: {
     color: Color.green,
-    text: 'SALE',
+    text: 'Operating',
   },
   2: {
     color: Color.yellow,
-    text: 'REJECT',
+    text: 'No Data',
   },
   3: {
     color: Color.red,
-    text: 'TAX',
+    text: 'Down',
   },
   4: {
     color: Color.blue,
@@ -24,37 +27,62 @@ const status = {
   },
 }
 
-function RecentSales({ data }) {
-  const columns = [
+function RecentSales({ data, type="diff" }) {
+  var columns = [
     {
       title: 'NAME',
       dataIndex: 'name',
     },
     {
-      title: 'STATUS',
-      dataIndex: 'status',
-      render: text => <Tag color={status[text].color}>{status[text].text}</Tag>,
-    },
-    {
-      title: 'DATE',
-      dataIndex: 'date',
-      render: text => moment(text).format('YYYY-MM-DD'),
-    },
-    {
-      title: 'PRICE',
-      dataIndex: 'price',
+      title: 'IMPACT',
+      dataIndex: type,
       render: (text, it) => (
-        <span style={{ color: status[it.status].color }}>${text}</span>
+        <span style={{ color: status[it.status] }}>{text}</span>
       ),
     },
+    {
+      title: 'STATUS',
+      dataIndex: 'status',
+      render: text => <Tag color={status[text]}>{text}</Tag>,
+    },
+    
   ]
+  
+  if (type === 'days'){
+    columns = [
+      {
+        title: 'NAME',
+        dataIndex: 'name',
+      },
+      {
+        title: 'DOWN DAYS',
+        dataIndex: type,
+        render: (text, it) => (
+          <span style={{ color: status[it.status] }}>{text}</span>
+        ),
+      },
+      {
+        title: 'LOST REVENUE',
+        dataIndex: 'lostrev',
+        render: (text, it) => (
+          <span style={{ color: status[it.status] }}>{text}</span>
+        ),
+      },
+      {
+        title: 'STATUS',
+        dataIndex: 'status',
+        render: text => <Tag color={status[text]}>{text}</Tag>,
+      },
+      
+    ]
+  } 
   return (
     <div className={styles.recentsales}>
       <Table
         pagination={false}
         columns={columns}
         rowKey='id'
-        dataSource={data.filter((item, key) => key < 5)}
+        dataSource={data.filter((item, key) => key < 11)}
       />
     </div>
   )
@@ -62,6 +90,7 @@ function RecentSales({ data }) {
 
 RecentSales.propTypes = {
   data: PropTypes.array,
+  type: PropTypes.string,
 }
 
 export default RecentSales

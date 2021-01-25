@@ -8,13 +8,15 @@ const isDevelopment = process.env.NODE_ENV === 'development'
 // how to speed compile: https://umijs.org/guide/boost-compile-speed
 export default {
   // IMPORTANT! change next line to yours or delete. And hide in dev
-  publicPath: isDevelopment ? '/' : 'https://cdn.antd-admin.zuiidea.com/',
+  publicPath: isDevelopment ? '/' : 'http://ec2-3-22-175-41.us-east-2.compute.amazonaws.com:7000',
+
   alias: {
     api: resolve(__dirname, './src/services/'),
     components: resolve(__dirname, './src/components'),
     config: resolve(__dirname, './src/utils/config'),
     themes: resolve(__dirname, './src/themes'),
     utils: resolve(__dirname, './src/utils'),
+    
   },
   antd: {},
   // a lower cost way to genereate sourcemap, default is cheap-module-source-map, could save 60% time in dev hotload

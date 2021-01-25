@@ -20,7 +20,7 @@ class Sider extends PureComponent {
       onThemeChange,
       onCollapseChange,
     } = this.props
-
+    
     return (
       <Layout.Sider
         width={256}
