@@ -11,7 +11,7 @@ import api from 'api'
 import route_list from '../nav/route_list'
 import config from 'config'
 
-const {queryRouteList,  logoutUser, queryUserInfo, users } = api
+const {queryRouteList,  logoutUser, issueList, users } = api
 
 const goDashboard = () => {
   if (pathToRegexp(['/', '/login']).exec(window.location.pathname)) {
@@ -39,13 +39,9 @@ export default {
     collapsed: store.get('collapsed') || false,
     notifications: [
       {
-        title: 'New User is registered.',
-        date: new Date(Date.now() - 10000000),
-      },
-      {
-        title: 'Application has been approved.',
-        date: new Date(Date.now() - 50000000),
-      },
+        project_name: '',
+        subject: '',
+      }
     ],
   },
   subscriptions: {
@@ -82,25 +78,32 @@ export default {
       // store isInit to prevent query trigger by refresh
       const isInit = store.get('isInit')
       if (isInit) {
-        
+        // const username = store.get('username')
+        // console.log(username)
+        // const { results } = yield call(users, payload)
+        // const user = {
+        //   username: results[0].username,
+        //   email: results[0].email,
+        //   id: results[0].id
+        // }
+        // console.log(user)
+        // store.set('user', user)
         goDashboard()
         return
       }
       
       const { locationPathname } = yield select(_ => _.app)
-      console.log(payload)
-      // const { success, user } = yield call(queryUserInfo, payload)
-      const {success, results} = yield call(users, payload)
-      const user = {
-        username: results[0].username,
-        email: results[0].email,
-        id: results[0].id
-      }
-      
-      const loggedIn = store.get('loggedIn')
 
-      if (success && user && loggedIn) {
+      const loggedIn = store.get('loggedIn')
+     
+      if (loggedIn) {
         
+        yield put({
+          type: 'updateState',
+          payload: {
+            notifications: []
+          },
+        })
         const list = route_list
         const permissions  = {
           role: ROLE_TYPE.ADMIN
@@ -125,8 +128,9 @@ export default {
         }
         store.set('routeList', routeList)
         store.set('permissions', permissions)
-        store.set('user', user)
+        // store.set('user', user)
         store.set('isInit', true)
+       
         goDashboard()
       } else if (queryLayout(config.layouts, locationPathname) !== 'public') {
         history.push({

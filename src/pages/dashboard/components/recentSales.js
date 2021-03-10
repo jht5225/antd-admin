@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import { Table, Tag } from 'antd'
+import { Table, Tag, Button } from 'antd'
 import { Color } from 'utils'
 import styles from './recentSales.less'
 
 const status = {
-  'Down': Color.red,
-  'No Data': Color.yellow,
-  'Operating': Color.green,
+  'down': Color.red,
+  'no data': Color.yellow,
+  'operating': Color.green,
   1: {
     color: Color.green,
     text: 'Operating',
@@ -27,7 +27,7 @@ const status = {
   },
 }
 
-function RecentSales({ data, type="diff" }) {
+function RecentSales({ data, type="diff", time="month" }) {
   var columns = [
     {
       title: 'NAME',
@@ -35,10 +35,12 @@ function RecentSales({ data, type="diff" }) {
     },
     {
       title: 'IMPACT',
-      dataIndex: type,
-      render: (text, it) => (
-        <span style={{ color: status[it.status] }}>{text}</span>
-      ),
+      dataIndex: [time,type],
+      // render: (text, it) => (
+      //   <span style={{ color: status[it.status] }}>{text}</span>
+      // ),
+      defaultSortOrder: 'descend',
+      sorter: true,
     },
     {
       title: 'STATUS',
@@ -47,7 +49,7 @@ function RecentSales({ data, type="diff" }) {
     },
     
   ]
-  
+
   if (type === 'days'){
     columns = [
       {
@@ -60,6 +62,8 @@ function RecentSales({ data, type="diff" }) {
         render: (text, it) => (
           <span style={{ color: status[it.status] }}>{text}</span>
         ),
+        defaultSortOrder: 'descend',
+        sorter: true,
       },
       {
         title: 'LOST REVENUE',
@@ -91,6 +95,79 @@ function RecentSales({ data, type="diff" }) {
 RecentSales.propTypes = {
   data: PropTypes.array,
   type: PropTypes.string,
+  time: PropTypes.string,
 }
 
-export default RecentSales
+class PerfTable extends PureComponent{
+
+ columns(){
+    return (this.props.type === 'downdays') ?
+      [
+        {
+          title: 'NAME',
+          dataIndex: 'name',
+        },
+        {
+          title: 'DOWN DAYS',
+          dataIndex: [this.props.time,this.props.type],
+          render: (text, it) => (
+            <span style={{ color: status[it.status] }}>{text}</span>
+          ),
+          defaultSortOrder: 'descend',
+          sorter: (a, b) => a[this.props.time][this.props.type] - b[this.props.time][this.props.type],
+        },
+        {
+          title: 'LOST REVENUE',
+          dataIndex: [this.props.time,'lostrevenue'],
+          sorter: (a, b) => a[this.props.time]['lostrevenue'] - b[this.props.time]['lostrevenue'],
+          render: (text, it) => (
+            <span style={{ color: status[it.status] }}>{text}</span>
+          ),
+        },
+        {
+          title: 'STATUS',
+          dataIndex: 'status',
+          render: text => <Tag color={status[text]}>{text}</Tag>,
+        },
+      ]
+      :
+      [
+        {
+          title: 'NAME',
+          dataIndex: 'name',
+        },
+        {
+          title: 'IMPACT',
+          dataIndex: [this.props.time,this.props.type],
+          // render: (text, it) => (
+          //   <span style={{ color: status[it.status] }}>{text}</span>
+          // ),
+          defaultSortOrder: 'descend',
+          sorter: (a, b) => a[this.props.time][this.props.type] - b[this.props.time][this.props.type],
+        },
+        {
+          title: 'STATUS',
+          dataIndex: 'status',
+          render: text => <Tag color={status[text]}>{text}</Tag>,
+        },
+        
+      ]
+  }
+
+  render(){
+    return(
+      <div className={styles.recentsales}>
+        <Table
+          pagination={false}
+          columns={this.columns()}
+          rowKey='id'
+          scroll={{y:400}}
+          dataSource={this.props.data}
+        />
+      </div>
+    )
+  }
+
+}
+
+export default PerfTable

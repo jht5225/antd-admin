@@ -10,11 +10,15 @@ const database = Mock.mock({
         postId += 1
         return postId + 10000
       },
-      'status|1-2': 1,
-      title: '@title',
-      author: '@last',
+      
+      'status|1-3': 1,
+      'type|1-2':1,
+
+      assignedTo: '@name',
       categories: '@word',
       tags: '@word',
+      'dueType|1-2':1,
+      'projectId|155-175':1,
       'views|10-200': 1,
       'comments|10-200': 1,
       visibility: () => {
@@ -23,15 +27,7 @@ const database = Mock.mock({
         )
       },
       date: '@dateTime',
-      image() {
-        return Mock.Random.image(
-          '100x100',
-          Mock.Random.color(),
-          '#757575',
-          'png',
-          this.author.substr(0, 1)
-        )
-      },
+
     },
   ],
 }).data

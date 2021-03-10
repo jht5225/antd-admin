@@ -2,12 +2,44 @@ import { Mock, Constant } from './_utils'
 
 const { ApiPrefix, Color } = Constant
 
-const Dashboard = Mock.mock({
-  'sales|8': [
+
+
+let taskListData = Mock.mock({
+  'data|80-100': [
     {
-      'name|+2': 0,
-      'Production|200-500': 1,
-      'Baseline|180-400': 1,
+      id: '@id',
+      name: '@name',
+      nickName: '@last',
+      phone: /^1[34578]\d{9}$/,
+      'age|11-99': 1,
+      'type|1-2':1,
+      'duetype|1-3':1,
+      'projectId|153-162':1,
+      'progress|1-4':1,
+      'quarterDue|1-4':1,
+      'priceFlux|10': [{
+        'price|10-200.1-2':1
+      }],
+      
+      date() {
+        return `${Mock.Random.integer(2021, 2022)}-${Mock.Random.date(
+          'MM-dd'
+        )} ${Mock.Random.time('HH:mm:ss')}`
+      },
+      'price|10-200.1-2': 1,
+    },
+  ],
+})
+
+let database = taskListData.data
+
+const Dashboard = Mock.mock({
+  'sales|12': [
+    {
+      'name|+1': 1,
+      'Complete|300-550': 1,
+      'Incomplete|200-400': 1,
+      'Unassigned|20-30': 1,
       
     },
   ],
@@ -58,11 +90,11 @@ const Dashboard = Mock.mock({
     sales: 3241,
     sold: 3556,
   },
-  'completed|12': [
+  'completed|18': [
     {
-      'name|+1': 2008,
-      'Task complete|200-1000': 1,
-      'Cards Complete|200-1000': 1,
+      'name|+1': 1,
+      'Prod|350-500': 1,
+      'Baseline|200-400': 1,
     },
   ],
   'comments|5': [
@@ -90,7 +122,7 @@ const Dashboard = Mock.mock({
     {
       'id|+1': 1,
       name: '@last',
-      'status|1-4': 1,
+      'type|1-2': 1,
       date() {
         return `${Mock.Random.integer(2015, 2016)}-${Mock.Random.date(
           'MM-dd'
@@ -109,28 +141,28 @@ const Dashboard = Mock.mock({
   },
   numbers: [
     {
-      icon: 'down-trend',
-      color: Color.red,
-      title: 'Raw Performance',
-      number: 89.5,
+      icon: 'pay-circle-o',
+      color: Color.green,
+      title: 'Online Review',
+      number: 2781,
     },
     {
-      icon: 'down-trend',
-      color: Color.red,
-      title: 'Adj. Performance',
-      number: 85.5,
+      icon: 'team',
+      color: Color.blue,
+      title: 'New Customers',
+      number: 3241,
     },
     {
-      icon: 'down-trend',
-      color: Color.red,
-      title: 'Month Completion',
-      number: 45.16,
+      icon: 'message',
+      color: Color.purple,
+      title: 'Active Projects',
+      number: 253,
     },
     {
-      icon: 'down-trend',
+      icon: 'shopping-cart',
       color: Color.red,
-      title: 'Year Completion',
-      number: 3.84,
+      title: 'Referrals',
+      number: 4324,
     },
   ],
 })
@@ -138,5 +170,54 @@ const Dashboard = Mock.mock({
 module.exports = {
   [`GET ${ApiPrefix}/dashboard`](req, res) {
     res.json(Dashboard)
+  },
+  [`GET ${ApiPrefix}/assets`](req, res) {
+    // const { query } = req
+    // let { pageSize, page, ...other } = query
+    // pageSize = pageSize || 10
+    // page = page || 1
+
+    // let newData = database
+    // for (let key in other) {
+    //   if ({}.hasOwnProperty.call(other, key)) {
+    //     newData = newData.filter(item => {
+    //       if ({}.hasOwnProperty.call(item, key)) {
+    //         if (key === 'address') {
+    //           return other[key].every(iitem => item[key].indexOf(iitem) > -1)
+    //         } else if (key === 'createTime') {
+    //           const start = new Date(other[key][0]).getTime()
+    //           const end = new Date(other[key][1]).getTime()
+    //           const now = new Date(item[key]).getTime()
+
+    //           if (start && end) {
+    //             return now >= start && now <= end
+    //           }
+    //           return true
+    //         }
+    //         return (
+    //           String(item[key])
+    //             .trim()
+    //             .indexOf(decodeURI(other[key]).trim()) > -1
+    //         )
+    //       }
+    //       return true
+    //     })
+    //   }
+    // }
+    // var data = []
+    // for (var key in database){
+    //   data.push(database[key])
+    // }
+    // res.json(data)
+    res.json(database)
+  },
+  [`GET ${ApiPrefix}/asset/:id`](req, res) {
+    const { id } = req.params
+    const data = queryArray(database, id, 'id')
+    if (data) {
+      res.status(200).json(data)
+    } else {
+      res.status(200).json(NOTFOUND)
+    }
   },
 }

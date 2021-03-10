@@ -29,14 +29,7 @@ class List extends PureComponent {
     const { onDeleteItem, onEditItem, i18n, ...tableProps } = this.props
 
     const columns = [
-      {
-        title: <Trans>Avatar</Trans>,
-        dataIndex: 'avatar',
-        key: 'avatar',
-        width: 72,
-        fixed: 'left',
-        render: text => <Avatar style={{ marginLeft: 8 }} src={text} />,
-      },
+     
       {
         title: <Trans>Name</Trans>,
         dataIndex: 'name',
@@ -44,40 +37,25 @@ class List extends PureComponent {
         render: (text, record) => <Link to={`user/${record.id}`}>{text}</Link>,
       },
       {
-        title: <Trans>NickName</Trans>,
-        dataIndex: 'nickName',
-        key: 'nickName',
-      },
-      {
-        title: <Trans>Age</Trans>,
-        dataIndex: 'age',
-        key: 'age',
-      },
-      {
-        title: <Trans>Gender</Trans>,
-        dataIndex: 'isMale',
-        key: 'isMale',
-        render: text => <span>{text ? 'Male' : 'Female'}</span>,
-      },
-      {
-        title: <Trans>Phone</Trans>,
-        dataIndex: 'phone',
-        key: 'phone',
-      },
-      {
-        title: <Trans>Email</Trans>,
-        dataIndex: 'email',
-        key: 'email',
-      },
-      {
         title: <Trans>Address</Trans>,
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'full_address',
+        key: 'full_address',
       },
       {
-        title: <Trans>CreateTime</Trans>,
-        dataIndex: 'createTime',
-        key: 'createTime',
+        title: <Trans>Capacity(dc)</Trans>,
+        dataIndex: 'dc_capacity',
+        key: 'dc_capacity',
+      },
+      {
+        title: <Trans>Contact</Trans>,
+        dataIndex: 'contact_name',
+        key: 'contact_name',
+        render: (text, record) => <Link to={`${record.contact_info}`}>{text}</Link>,
+      },
+      {
+        title: <Trans>Acquisition Date</Trans>,
+        dataIndex: 'acquisition_date',
+        key: 'acquisition_date',
       },
       {
         title: <Trans>Operation</Trans>,

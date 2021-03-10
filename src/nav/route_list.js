@@ -21,22 +21,10 @@ const route_list = [
       'pt-br': {
         name: 'Projetos'
       },
-      icon: 'user',
+      icon: 'panel',
       route: '/user',
     },
-    {
-      id: '7',
-      breadcrumbParentId: '1',
-      name: 'Companies',
-      zh: {
-        name: '用户管理'
-      },
-      'pt-br': {
-        name: 'Empresas'
-      },
-      icon: 'user',
-      route: '/post',
-    },
+   
     {
       id: '21',
       menuParentId: '-1',
@@ -51,98 +39,105 @@ const route_list = [
       route: '/user/:id',
     },
     {
-      id: '3',
-      breadcrumbParentId: '1',
-      name: 'Request',
+      id: '26',
+      menuParentId: '-1',
+      breadcrumbParentId: '6',
+      name: 'Task Detail',
       zh: {
-        name: 'Request'
+        name: '用户详情'
       },
       'pt-br': {
-        name: 'Requisição'
+        name: 'Detalhes do usuário'
       },
-      icon: 'api',
-      route: '/request',
+      route: '/assets/:id',
     },
     {
-      id: '4',
-      breadcrumbParentId: '1',
-      name: 'UI Element',
+      id: '6',
+      name: 'Asset Management',
       zh: {
         name: 'UI组件'
       },
       'pt-br': {
         name: 'Elementos UI'
       },
-      icon: 'camera-o',
+      icon: 'audit',
+      route: '/assets',
     },
     {
-      id: '45',
-      breadcrumbParentId: '4',
-      menuParentId: '4',
-      name: 'Editor',
-      zh: {
-        name: 'Editor'
-      },
-      'pt-br': {
-        name: 'Editor'
-      },
-      icon: 'edit',
-      route: '/editor',
+      id: '12',
+      name: 'Change Passord',
+      menuParentId: '-1',
+      icon: 'audit',
+      route: '/change_password',
     },
-    {
-      id: '5',
-      breadcrumbParentId: '1',
-      name: 'Charts',
-      zh: {
-        name: 'Charts'
-      },
-      'pt-br': {
-        name: 'Graficos'
-      },
-      icon: 'code-o',
-    },
-    {
-      id: '51',
-      breadcrumbParentId: '5',
-      menuParentId: '5',
-      name: 'ECharts',
-      zh: {
-        name: 'ECharts'
-      },
-      'pt-br': {
-        name: 'ECharts'
-      },
-      icon: 'line-chart',
-      route: '/chart/ECharts',
-    },
-    {
-      id: '52',
-      breadcrumbParentId: '5',
-      menuParentId: '5',
-      name: 'HighCharts',
-      zh: {
-        name: 'HighCharts'
-      },
-      'pt-br': {
-        name: 'HighCharts'
-      },
-      icon: 'bar-chart',
-      route: '/chart/highCharts',
-    },
-    {
-      id: '53',
-      breadcrumbParentId: '5',
-      menuParentId: '5',
-      name: 'Rechartst',
-      zh: {
-        name: 'Rechartst'
-      },
-      'pt-br': {
-        name: 'Rechartst'
-      },
-      icon: 'area-chart',
-      route: '/chart/Recharts',
-    },
+    // {
+    //   id: '45',
+    //   breadcrumbParentId: '4',
+    //   menuParentId: '4',
+    //   name: 'Editor',
+    //   zh: {
+    //     name: 'Editor'
+    //   },
+    //   'pt-br': {
+    //     name: 'Editor'
+    //   },
+    //   icon: 'edit',
+    //   route: '/editor',
+    // },
+    // {
+    //   id: '5',
+    //   breadcrumbParentId: '1',
+    //   name: 'Charts',
+    //   zh: {
+    //     name: 'Charts'
+    //   },
+    //   'pt-br': {
+    //     name: 'Graficos'
+    //   },
+    //   icon: 'code-o',
+    // },
+    // {
+    //   id: '51',
+    //   breadcrumbParentId: '5',
+    //   menuParentId: '5',
+    //   name: 'ECharts',
+    //   zh: {
+    //     name: 'ECharts'
+    //   },
+    //   'pt-br': {
+    //     name: 'ECharts'
+    //   },
+    //   icon: 'line-chart',
+    //   route: '/chart/ECharts',
+    // },
+    // {
+    //   id: '52',
+    //   breadcrumbParentId: '5',
+    //   menuParentId: '5',
+    //   name: 'HighCharts',
+    //   zh: {
+    //     name: 'HighCharts'
+    //   },
+    //   'pt-br': {
+    //     name: 'HighCharts'
+    //   },
+    //   icon: 'bar-chart',
+    //   route: '/chart/highCharts',
+    // },
+    // {
+    //   id: '53',
+    //   breadcrumbParentId: '5',
+    //   menuParentId: '5',
+    //   name: 'Rechartst',
+    //   zh: {
+    //     name: 'Rechartst'
+    //   },
+    //   'pt-br': {
+    //     name: 'Rechartst'
+    //   },
+    //   icon: 'area-chart',
+    //   route: '/chart/Recharts',
+    // },
   ]
 
   export default route_list;

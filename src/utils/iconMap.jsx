@@ -13,11 +13,18 @@ import {
   BarChartOutlined,
   AreaChartOutlined,
   FallOutlined,
-  RiseOutlined
-
+  RiseOutlined,
+  BorderInnerOutlined,
+  ToolOutlined,
+  AuditOutlined,
+  CalendarOutlined,
+  DollarOutlined,
+  CalculatorOutlined,
+  RightOutlined,
 } from '@ant-design/icons'
 
 export default {
+  'rightButton': <RightOutlined />,
   'pay-circle-o': <PayCircleOutlined />,
   'shopping-cart': <ShoppingCartOutlined />,
   'camera-o': <CameraOutlined />,
@@ -27,6 +34,12 @@ export default {
   'bar-chart': <BarChartOutlined />,
   'up-trend': <RiseOutlined />,
   'down-trend': <FallOutlined />,
+  'panel': <BorderInnerOutlined />,
+  'tool': <ToolOutlined />,
+  'audit': <AuditOutlined />,
+  'calendar': <CalendarOutlined />,
+  'dollar': <DollarOutlined />,
+  'calc': <CalculatorOutlined />,
   message: <MessageOutlined />,
   team: <TeamOutlined />,
   dashboard: <DashboardOutlined />,

@@ -47,6 +47,9 @@ class Header extends PureComponent {
             </Fragment>
           }
         >
+           <Menu.Item key="ChangePassword">
+            <Trans><a href='/change_password/'>Change Password</a></Trans>
+          </Menu.Item>
           <Menu.Item key="SignOut">
             <Trans>Sign out</Trans>
           </Menu.Item>
@@ -97,6 +100,7 @@ class Header extends PureComponent {
             <List
               itemLayout="horizontal"
               dataSource={notifications}
+              style={{overflow:'auto',height:"300px"}}
               locale={{
                 emptyText: <Trans>You have viewed all notifications.</Trans>,
               }}
@@ -105,10 +109,10 @@ class Header extends PureComponent {
                   <List.Item.Meta
                     title={
                       <Ellipsis tooltip lines={1}>
-                        {item.title}
+                        {item.project_name}
                       </Ellipsis>
                     }
-                    description={moment(item.date).fromNow()}
+                    description={item.subject}
                   />
                   <RightOutlined style={{ fontSize: 10, color: '#ccc' }} />
                 </List.Item>

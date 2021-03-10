@@ -12,31 +12,31 @@ export default function request(options) {
   let { data, url, method = 'get' } = options
   const cloneData = cloneDeep(data)
 
-  try {
-    let domain = ''
-    const urlMatch = url.match(/[a-zA-z]+:\/\/[^/]*/)
+  // try {
+  //   let domain = ''
+  //   const urlMatch = url.match(/[a-zA-z]+:\/\/[^/]*/)
     
-    if (urlMatch) {
-      ;[domain] = urlMatch
-      url = url.slice(domain.length)
-    }
+  //   if (urlMatch) {
+  //     ;[domain] = urlMatch
+  //     url = url.slice(domain.length)
+  //   }
 
-    const match = parse(url)
-    url = compile(url)(data)
+  //   const match = parse(url) 
+  //   url = compile(url)(data)
 
-    for (const item of match) {
-      if (item instanceof Object && item.name in cloneData) {
-        delete cloneData[item.name]
-      }
-    }
+  //   for (const item of match) {
+  //     if (item instanceof Object && item.name in cloneData) {
+  //       delete cloneData[item.name]
+  //     }
+  //   }
     
-    url = domain + url
-  } catch (e) {
-    message.error(e.message)
-  }
+  //   url = domain + url
+  // } catch (e) {
+  //   message.error(e.message)
+  // }
 
   options.url = url
-  options.params = cloneData
+  options.params = data
   options.cancelToken = new CancelToken(cancel => {
     window.cancelRequest.set(Symbol(Date.now()), {
       pathname: window.location.pathname,

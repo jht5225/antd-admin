@@ -27,11 +27,11 @@ class Filter extends Component {
   formRef = React.createRef()
 
   handleFields = fields => {
-    const { createTime } = fields
-    if (createTime && createTime.length) {
-      fields.createTime = [
-        moment(createTime[0]).format('YYYY-MM-DD'),
-        moment(createTime[1]).format('YYYY-MM-DD'),
+    const { acquisitionDate } = fields
+    if (acquisitionDate && acquisitionDate.length) {
+      fields.acquisitionDate = [
+        moment(acquisitionDate[0]).format('YYYY-MM-DD'),
+        moment(acquisitionDate[1]).format('YYYY-MM-DD'),
       ]
     }
     return fields
@@ -70,16 +70,16 @@ class Filter extends Component {
     const { onAdd, filter, i18n } = this.props
     const { name, address } = filter
 
-    let initialCreateTime = []
-    if (filter.createTime && filter.createTime[0]) {
-      initialCreateTime[0] = moment(filter.createTime[0])
+    let initialacquisitionDate = []
+    if (filter.acquisitionDate && filter.acquisitionDate[0]) {
+      initialacquisitionDate[0] = moment(filter.acquisitionDate[0])
     }
-    if (filter.createTime && filter.createTime[1]) {
-      initialCreateTime[1] = moment(filter.createTime[1])
+    if (filter.acquisitionDate && filter.acquisitionDate[1]) {
+      initialacquisitionDate[1] = moment(filter.acquisitionDate[1])
     }
 
     return (
-      <Form ref={this.formRef} name="control-ref" initialValues={{ name, address, createTime: initialCreateTime }}>
+      <Form ref={this.formRef} name="control-ref" initialValues={{ name, address, acquisitionDate: initialacquisitionDate }}>
         <Row gutter={24}>
           <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
             <Form.Item name="name">
@@ -89,34 +89,13 @@ class Filter extends Component {
               />
             </Form.Item>
           </Col>
-          <Col
-            {...ColProps}
-            xl={{ span: 4 }}
-            md={{ span: 8 }}
-            id="addressCascader"
-          >
+          <Col {...ColProps} xl={{ span: 4 }} md={{ span: 8 }}>
             <Form.Item name="address">
-              <Cascader
-                style={{ width: '100%' }}
-                options={city}
+              <Search
                 placeholder={i18n.t`Please pick an address`}
+                onSearch={this.handleSubmit}
               />
             </Form.Item>
-          </Col>
-          <Col
-            {...ColProps}
-            xl={{ span: 6 }}
-            md={{ span: 8 }}
-            sm={{ span: 12 }}
-            id="createTimeRangePicker"
-          >
-            <FilterItem label={i18n.t`CreateTime`}>
-              <Form.Item name="createTime">
-                <RangePicker
-                  style={{ width: '100%' }}
-                />
-              </Form.Item>
-            </FilterItem>
           </Col>
           <Col
             {...TwoColProps}

@@ -134,6 +134,7 @@ class DynamicChartComponent extends React.Component {
             while (len--) {
               res.push(Math.round(Math.random() * 1000))
             }
+            console.log(res)
             return res
           })(),
         },

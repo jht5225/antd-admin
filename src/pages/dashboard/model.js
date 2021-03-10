@@ -11,30 +11,13 @@ const avatar = '//cdn.antd-admin.zuiidea.com/bc442cf0cc6f7940dcc567e465048d1a8d6
 export default modelExtend(model, {
   namespace: 'dashboard',
   state: {
-    weather: {
-      city: '深圳',
-      temperature: '30',
-      name: '晴',
-      icon: '//cdn.antd-admin.zuiidea.com/sun.png',
-    },
-    sales: [],
-    quote: {
-      avatar,
-    },
-    numbers: [],
-    recentSales: [],
-    comments: [],
     completed: [],
-    browser: [],
-    cpu: {},
-    user: {
-      avatar,
-    },
     dayname: "January 1st 0000",
     monthname: "January 0000",
     adjytdperf: 0,
     rawytdperf: 0,
     num_projects: 146,
+    time:'month',
     num_reporting: 0,
     worstmonthperfabs: [
       {
@@ -95,21 +78,68 @@ export default modelExtend(model, {
         rolling: "0.00%"
       }
     ],
-    restofmonth:{
-      perccomp: 0.00,
-      rawvariance: 0.00,
-      adjvariance: 0.00
+    completeness: {
+      restofmonth:{
+        perccomp: 0.00,
+        rawvariance: 0.00,
+        adjvariance: 0.00
+      },
+      restofyear:{
+        perccomp: 0.00,
+        rawvariance: 0.00,
+        adjvariance: 0.00
+      },
+      rollingyear: {
+        perccomp: 0.00,
+        rawvariance: 0.00,
+        adjvariance: 0.00
+      },
     },
-    restofyear:{
-      perccomp: 0.00,
-      rawvariance: 0.00,
-      adjvariance: 0.00
-    },
-    rollingyear: {
-      perccomp: 0.00,
-      rawvariance: 0.00,
-      adjvariance: 0.00
-    },
+    perfdata:[
+      {
+        id: 0,
+        name:'',
+        size: 0,
+        state: "",
+        status: "",
+        month: {
+          adjbaseline:0,
+          adjvariance:0,
+          baseline:0,
+          downdays:0,
+          irradiance:0,
+          irrbaseline:0,
+          lostproduction:0,
+          lostrevenue:0,
+          total:0,
+          variance:0
+        },
+        rolling: {
+          adjbaseline:0,
+          adjvariance:0,
+          baseline:0,
+          downdays:0,
+          irradiance:0,
+          irrbaseline:0,
+          lostproduction:0,
+          lostrevenue:0,
+          total:0,
+          variance:0
+        },
+        year: {
+          adjbaseline:0,
+          adjvariance:0,
+          baseline:0,
+          downdays:0,
+          irradiance:0,
+          irrbaseline:0,
+          lostproduction:0,
+          lostrevenue:0,
+          total:0,
+          variance:0
+        },
+      }
+    ]
 
   },
   subscriptions: {
@@ -172,13 +202,21 @@ export default modelExtend(model, {
           worstyearperfabs: data.worstyearperfabs,
           downtimemonth: data.downtimemonth,
           downtimeyear: data.downtimeyear,
-          irrvariance: data.irrvariance
+          irrvariance: data.irrvariance,
+          perfdata:data.perfdata,
         }
         yield put({
           type: "updateState",
           payload: data
         })
       }
+    },
+    *setTime({payload={}}, {put}){
+      yield put({
+        type: 'updateState',
+        payload: payload
+      })
+
     }
   },
 })

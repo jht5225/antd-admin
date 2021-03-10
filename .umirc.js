@@ -8,7 +8,7 @@ const isDevelopment = process.env.NODE_ENV === 'development'
 // how to speed compile: https://umijs.org/guide/boost-compile-speed
 export default {
   // IMPORTANT! change next line to yours or delete. And hide in dev
-  publicPath: isDevelopment ? '/' : 'http://ec2-3-22-175-41.us-east-2.compute.amazonaws.com:7000',
+  publicPath: isDevelopment ? '/' : 'http://ec2-3-138-245-78.us-east-2.compute.amazonaws.com:7000/',
 
   alias: {
     api: resolve(__dirname, './src/services/'),
@@ -70,7 +70,7 @@ export default {
   chainWebpack: function (config, { webpack }) {
     config.merge({
       optimization: {
-        minimize: true,
+        minimize: false,
         splitChunks: {
           chunks: 'all',
           minSize: 30000,

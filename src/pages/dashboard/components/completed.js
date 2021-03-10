@@ -15,10 +15,11 @@ import {
 import styles from './completed.less'
 
 function Completed({ data }) {
+  console.log(data)
   return (
     <div className={styles.sales}>
-      <div className={styles.title}>TEAM TOTAL COMPLETED</div>
-      <ResponsiveContainer minHeight={360}>
+      <div className={styles.title}>Prod Vs. Baseline(Under Construction)</div>
+      <ResponsiveContainer minHeight={405}>
         <AreaChart data={data}>
           <Legend
             verticalAlign="top"
@@ -80,7 +81,7 @@ function Completed({ data }) {
           />
           <Area
             type="monotone"
-            dataKey="Task complete"
+            dataKey="Prod"
             stroke={Color.grass}
             fill={Color.grass}
             strokeWidth={2}
@@ -89,7 +90,7 @@ function Completed({ data }) {
           />
           <Area
             type="monotone"
-            dataKey="Cards Complete"
+            dataKey="Baseline"
             stroke={Color.sky}
             fill={Color.sky}
             strokeWidth={2}

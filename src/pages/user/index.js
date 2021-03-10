@@ -82,8 +82,9 @@ class User extends PureComponent {
   get listProps() {
     const { dispatch, user, loading } = this.props
     const { list, pagination, selectedRowKeys } = user
-
+    console.log(list)
     return {
+      
       dataSource: list,
       loading: loading.effects['user/query'],
       pagination,
@@ -153,7 +154,7 @@ class User extends PureComponent {
       },
     }
   }
-
+ 
   render() {
     const { user } = this.props
     const { selectedRowKeys } = user

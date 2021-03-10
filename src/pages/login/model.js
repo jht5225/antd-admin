@@ -22,8 +22,12 @@ export default {
     *login({ payload }, { put, call, select }) {
       // const data = yield call(loginUser, payload)
       // console.log(data)
+      const username = payload.username
+      const user ={
+        'username': username
+      }
       const newData = yield call(logIn, payload)
-      
+      store.set('user', user)
       
       const { locationQuery } = yield select(_ => _.app)
       if (newData.success) {

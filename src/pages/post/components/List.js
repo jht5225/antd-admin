@@ -1,56 +1,64 @@
 import React, { PureComponent } from 'react'
-import { Table, Avatar } from 'antd'
+import { Table, Avatar, Tag } from 'antd'
 import { withI18n } from '@lingui/react'
-import { Ellipsis } from 'components'
+import { Link } from 'umi'
 import styles from './List.less'
+import { Color } from 'utils'
 
+const status ={
+  1: {
+    text: "assigned",
+    color: Color.red
+  },
+  2: {
+    text: 'paid',
+    color: Color.yellow
+  },
+  3: {
+    text: 'posted',
+    color: Color.green
+  }
+}
+
+const type = {
+  1: {
+    text: 'TAX',
+    color: Color.blue
+  },
+  2: {
+    text: 'LEASE',
+    color: Color.purple
+  }
+}
 @withI18n()
 class List extends PureComponent {
   render() {
     const { i18n, ...tableProps } = this.props
     const columns = [
       {
-        title: i18n.t`Image`,
-        dataIndex: 'image',
-        render: text => <Avatar shape="square" src={text} />,
+        title: "TYPE",
+        dataIndex: 'type',
+        render: (text, record) => <Link to={`/task/`}><Tag color={type[text].color}>{type[text].text}</Tag></Link>,
       },
       {
-        title: i18n.t`Title`,
-        dataIndex: 'title',
-        render: text => (
-          <Ellipsis tooltip length={30}>
-            {text}
-          </Ellipsis>
-        ),
+        title: i18n.t`STATUS`,
+        dataIndex: 'status',
+      render: text => <Tag color={status[text].color}>{status[text].text}</Tag>,
       },
       {
-        title: i18n.t`Author`,
-        dataIndex: 'author',
+        title: 'PROJECT',
+        dataIndex: 'projectId',
+        render: text => <a href={`/user/${text}`}>Project</a>
       },
       {
-        title: i18n.t`Categories`,
-        dataIndex: 'categories',
+        title: 'ASSIGNED TO',
+        dataIndex: 'assignedTo',
       },
       {
-        title: i18n.t`Tags`,
-        dataIndex: 'tags',
-      },
-      {
-        title: i18n.t`Visibility`,
-        dataIndex: 'visibility',
-      },
-      {
-        title: i18n.t`Comments`,
-        dataIndex: 'comments',
-      },
-      {
-        title: i18n.t`Views`,
-        dataIndex: 'views',
-      },
-      {
-        title: i18n.t`Publish Date`,
-        dataIndex: 'date',
-      },
+        title: 'DUE',
+        dataIndex: 'date'
+      }
+      
     ]
 
     return (
